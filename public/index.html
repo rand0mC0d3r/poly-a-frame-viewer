@@ -24,7 +24,35 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Google POLY & A-Frame</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script>
+      AFRAME.registerComponent('autoscale', {
+        schema: {type: 'number', default: 1},
+        init: function () {
+          this.scale();
+          this.el.addEventListener('object3dset', () => this.scale());
+        },
+        scale: function () {
+          const el = this.el;
+          const span = this.data;
+          const mesh = el.getObject3D('mesh');
+
+          if (!mesh) return;
+
+          // Compute bounds.
+          const bbox = new THREE.Box3().setFromObject(mesh);
+
+          // Normalize scale.
+          const scale = span / bbox.getSize().length();
+          mesh.scale.set(scale, scale, scale);
+
+          // Recenter.
+          const offset = bbox.getCenter().multiplyScalar(scale);
+          mesh.position.sub(offset);
+        }
+      });
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

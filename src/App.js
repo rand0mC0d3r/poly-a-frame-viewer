@@ -1,19 +1,10 @@
 import React from 'react';
 
-import PolySearch from './components/PolySearch/PolySearch';
-
-import './App.css';
+import PolyDashboard from './components/PolyDashboard/PolyDashboard';
 
 function App() {
   return (
-    <div className="App__container">
-      <div className="App__search">
-        <PolySearch />
-      </div>
-      <div className="App__preview">
-        preview
-      </div>
-    </div>
+    <PolyDashboard />
   );
 }
 

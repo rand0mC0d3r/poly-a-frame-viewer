@@ -1,0 +1,21 @@
+
+.PolyDashboard__container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-content: stretch;
+    align-items: stretch;
+    height: 100%;
+}
+
+.PolyDashboard__search {
+    position: relative;
+    flex: 0 0 40%;
+    width: 0px;
+    padding: 15px;
+}
+
+.PolyDashboard__preview {
+    flex: 1 0 auto;
+}

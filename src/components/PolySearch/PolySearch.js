@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -16,16 +17,10 @@ class PolySearch extends Component {
     error: null,
   }
 
-  // _addPolyAsset = (polyAsset) => {
-  //   const { updatePoly } = this.props;
-
-  //   // debugger;
-  //   updatePoly({
-  //     name: polyAsset.displayName,
-  //     gltf: polyAsset.formats.find(format => format.formatType === 'GLTF2').root.url,
-  //     thumbnail: polyAsset.thumbnail.url,
-  //   });
-  // }
+  _selectPolyAsset = (polyAsset) => {
+    const { selectPolyAsset } = this.props;
+    selectPolyAsset(polyAsset);
+  }
 
   _addApiKey = (apiKey) => {
     this.setState({apiKey});
@@ -80,7 +75,6 @@ class PolySearch extends Component {
         <TextField
           autoFocus={true}
           fullWidth
-          value="AIzaSyA8qTh0ZUxwsB5bWan5V6qz8gChH0N-o2s"
           label="Api Key..."
           variant="outlined"
           onChange={(event) => this._addApiKey(event.target.value)}/>
@@ -103,7 +97,11 @@ class PolySearch extends Component {
               {isLoaded && items && items.length > 0 ? (
                 <React.Fragment>
                   {items.filter(item => item.license === 'CREATIVE_COMMONS_BY').map(item => (
-                    <PolyResult polyAsset={item} />
+                    <div
+                      onClick={() => this._selectPolyAsset(item)}
+                      key={item.name}>
+                        <PolyResult polyAsset={item} />
+                    </div>
                   ))}
                 </React.Fragment>
               ) : (
@@ -122,5 +120,9 @@ class PolySearch extends Component {
     );
   }
 }
+
+PolySearch.propTypes = {
+  selectPolyAsset: PropTypes.func.isRequired,
+};
 
 export default PolySearch;
